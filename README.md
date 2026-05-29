@@ -1,22 +1,33 @@
-# CS61A 自学仓库 🎲
+# CS61A 自学仓库
 
-这是我跟学 UC Berkeley **CS61A: Structure and Interpretation of Computer Programs** 的代码仓库，包含课程作业和项目。
+这是我跟学 UC Berkeley **CS61A: Structure and Interpretation of Computer Programs** 的代码仓库。课程前半段用 Python 讲编程基础与函数式思想，后半段用 Scheme 讲解释器——抽象力拉满。这里放作业、Project 和学习笔记，持续更新。
 
 ## 目录结构
 
 ```
 cs61a/
-├── hw01/          # 作业：变量、控制流、基础函数
-├── hog/           # Project 1: The Game of Hog
-├── note/          # 学习笔记（高阶函数等）
+├── hw01/          # 作业：函数、控制流
+├── hw02/          # 作业：高阶函数、accumulate 抽象
+├── hog/           # Project 1: The Game of Hog（骰子游戏）
+├── note/          # 学习笔记
 └── README.md
 ```
 
 ## 作业
 
-| 目录 | 内容 |
+| 目录 | 文件 | 做了什么 |
+|------|------|----------|
+| `hw01/` | `hw01.py` | `a_plus_abs_b`（不用 `abs` 实现 a+\|b\|）、`two_of_three`（三数取两小，求平方和）、`largest_factor`（找最大真因数）、`hailstone`（冰雹序列 / Collatz 猜想） |
+| `hw02/` | `hw02.py` | `product`（连乘）、`accumulate`（通用 fuse 抽象——加和乘只是它的特例）、`summation_using_accumulate` / `product_using_accumulate`（用 accumulate 一行实现求和/求积）、`make_repeater`（返回复合 n 次 f 的函数，闭包初体验） |
+
+每一题都有 doctest，写完直接跑验证，很有 TDD 的感觉。
+
+## 笔记
+
+| 文件 | 内容 |
 |------|------|
-| `hw01/` | 入门练习，涵盖变量绑定、条件判断、循环和基础函数定义 |
+| `note/main.py` | 短路求值（`and`/`or` 的求值策略）、自制 `if_` 函数 |
+| `note/higher order function.py` | 高阶函数：`summation` 通项求和、`make_adder` 闭包造函数、`assert` 断言用法 |
 
 ## Project: The Game of Hog 🐗
 
