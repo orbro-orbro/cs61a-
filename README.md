@@ -8,6 +8,9 @@
 cs61a/
 ├── hw01/          # 作业：函数、控制流
 ├── hw02/          # 作业：高阶函数、accumulate 抽象
+├── hw03/          # 作业：递归
+├── lab03/         # Lab：列表操作与递归
+├── lab04/         # Lab：高阶函数与数据抽象（树）
 ├── hog/           # Project 1: The Game of Hog（骰子游戏）
 ├── note/          # 学习笔记
 └── README.md
@@ -19,6 +22,14 @@ cs61a/
 |------|------|----------|
 | `hw01/` | `hw01.py` | `a_plus_abs_b`（不用 `abs` 实现 a+\|b\|）、`two_of_three`（三数取两小，求平方和）、`largest_factor`（找最大真因数）、`hailstone`（冰雹序列 / Collatz 猜想） |
 | `hw02/` | `hw02.py` | `product`（连乘）、`accumulate`（通用 fuse 抽象——加和乘只是它的特例）、`summation_using_accumulate` / `product_using_accumulate`（用 accumulate 一行实现求和/求积）、`make_repeater`（返回复合 n 次 f 的函数，闭包初体验） |
+| `hw03/` | `hw02.py` | `num_eights`（数位上 8 的个数）、`digit_distance`（相邻数位差的绝对值之和）、`interleaved_sum`（奇偶位交替求和，从 1 递推 n）、`next_smaller_dollar` / `next_larger_dollar`（找各位递减/递增的美元金额）、`count_dollars`（递归计数到目标金额）、`shuffle`（交错合并列表两半）、`deep_map`（递归映射嵌套列表） |
+
+## Lab
+
+| 目录 | 文件 | 做了什么 |
+|------|------|----------|
+| `lab03/` | `lab03.py` | `flatten`（展平嵌套列表）、`close_list`（找最近的 k 个相邻元素）、`remove_first`（按值删除首个匹配项）、`sort`（选择排序）、`make_onion`（函数洋葱：`f(g(x))` → `g(f(x))`）、`make_func_repeater`（把函数重复应用 n 次）、`ten_pairs`（统计和为 10 的数位对）、`count_digit`（统计数字 n 中某数位的出现次数） |
+| `lab04/` | `lab04.py` | 自实现 `my_map` / `my_filter` / `my_reduce`，城市数据抽象（`make_city` / `get_name` / `get_lat` / `get_lon` → `distance` / `closer_city`），树抽象（`sum_tree` 递归求和、`balanced` 判断分支数是否递减、`num_trees` 枚举所有树形、`only_paths` 从标签构造路径树） |
 
 每一题都有 doctest，写完直接跑验证，很有 TDD 的感觉。
 
@@ -28,6 +39,12 @@ cs61a/
 |------|------|
 | `note/main.py` | 短路求值（`and`/`or` 的求值策略）、自制 `if_` 函数 |
 | `note/higher order function.py` | 高阶函数：`summation` 通项求和、`make_adder` 闭包造函数、`assert` 断言用法 |
+| `note/recursion.py` | 递归入门：`sum_digit`（数位求和）、`fact`（阶乘） |
+| `note/Functional Abstraction.py` | 作用域与闭包：`search` 暴力搜索构造反函数、`trace` 装饰器、`horse/mask` 命名混淆与帧分析 |
+| `note/treerecursion.py` | 树递归全攻略：`cascade` 级联打印、`f_then_g` 高阶递归骨架（grow/shrink/inverse）、Fib、Counting Partitions，附 lambda 详解 |
+| `note/Sequence and Containers.py` | 序列与容器：List/Range/String/Dict 全覆盖，切片、列表推导式、序列聚合（sum/max/min）、解包与成员检测 |
+| `note/Mutability and Data Abstraction.py` | 数据抽象：构造器与选择器的分离思想，以有理数（rational）为例用闭包实现 ADT |
+| `note/Tree.py` | 树 ADT（嵌套列表表示）：`fib_tree` 斐波那契树、`print_sums` 路径和、`count_leaves` / `count_paths` 等递归操作 |
 
 ## Project: The Game of Hog 🐗
 
