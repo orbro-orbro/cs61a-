@@ -12,6 +12,7 @@ cs61a/
 ├── lab03/         # Lab：列表操作与递归
 ├── lab04/         # Lab：高阶函数与数据抽象（树）
 ├── hog/           # Project 1: The Game of Hog（骰子游戏）
+├── cats/          # Project 2: Cats（打字测试与自动纠错）
 ├── note/          # 学习笔记
 └── README.md
 ```
@@ -70,6 +71,36 @@ python hog_gui.py              # 图形界面
 python hog_ui.py -n 0          # AI vs AI 观战
 python hog_ui.py -n 1          # 真人 vs AI
 python hog.py -r               # 策略胜率实验
+如果无法执行，可以考虑将python换成py，或者python3
+```
+
+## Project: Cats 🐱
+
+Cats（Computer Aided Typing Software）是一个打字测试与自动纠错系统。用户在命令行里按主题选段落、限时打字，程序实时统计速度和准确率；背后还实现了一套编辑距离算法驱动的拼写纠错引擎，以及多人打字比赛的数据统计模块。
+
+### 四个阶段
+
+- **Phase 1 — Typing**：段落筛选（`pick` + `about`）、准确率（`accuracy`）和 WPM 速度（`wpm`）计算——把打字测试跑起来的基础。
+- **Phase 2 — Autocorrect**：自动纠错核心。`autocorrect` 用差异函数从词表中找最佳匹配；`furry_fixes` 只允许替换字符；`minimum_mewtations` 是完整编辑距离（插入/删除/替换），带 `limit` 剪枝。可选扩展 `final_diff` 还加入了相邻字符交换（Damerau 步），让纠错更聪明。
+- **Phase 3 — Multiplayer**：`report_progress` 上传进度、`time_per_word` 将时间戳转为逐词耗时、`fastest_words` 按单词判最快玩家——一个简易的多人对战统计系统。
+- **Phase 4 (EC)** — Efficiency：实现 `memo_diff` 带缓存装饰器，避免同一对单词在不同 `limit` 下重复递归。缓存键是 `(entered, source)` 对，新 `limit` 小于等于缓存 `limit` 时直接复用，否则重新计算并更新。
+
+### 项目亮点
+
+**编辑距离 + 剪枝**是 Cats 最有算法味的部分。`furry_fixes` → `minimum_mewtations` → `final_diff` 层层递进，从只允许替换到允许增删改再到交换相邻字符。`limit` 参数贯穿所有 diff 函数，一旦当前差异超过上限立即剪枝返回，避免穷举——这是递归搜索中剪枝策略的典型应用。
+
+**多玩家数据处理**：`time_per_word` 把每个玩家的累计时间戳转为逐词耗时，`fastest_words` 再按单词判胜负——本质上是一个按列求 argmin 再按玩家分组的操作，练习了二维列表的遍历和字典组装。
+
+**memo_diff 的缓存策略**与普通 memoization 不同：新 `limit` 比旧 `limit` 更宽松时需要重新计算（因为更大的 `limit` 可能找到更优解），否则直接复用缓存。这是一个"带阈值的记忆化"，比无脑 memo 多了一层判断逻辑。
+
+### 运行方式
+
+```bash
+cd cats
+python cats.py -t              # 无主题，随机段落
+python cats.py -t dog          # 只练习包含 dog 的段落
+python cats_gui.py             # 图形界面（多人模式）
+python ok                      # 课程自带测试
 如果无法执行，可以考虑将python换成py，或者python3
 ```
 
