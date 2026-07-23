@@ -82,3 +82,70 @@ a.bank_name = 'America Bank'  # 在 a 上创建同名的实例属性("遮蔽"了
 
 print(a.bank_name)  # -> 'America Bank'(实例属性优先)
 print(b.bank_name)  # -> 'China Bank'(b 没有实例属性, 向上找到类属性)
+
+
+# =============================================================================
+# 六, 继承(Inheritance)
+# =============================================================================
+# 子类继承父类的所有属性和方法, 只需编写不同的部分.
+# 语法: class <name>(<base class>)
+
+class CheckingAccount(Account):
+    withdraw_fee = 1
+    interest = 0.01
+
+    def withdraw(self, amount):
+        # Account.withdraw: 类名调用不自动绑self, 须手动传; 直接指定父类, 避免self.withdraw无限递归.
+        # self.withdraw_fee: 类属性不在局部作用域, 必须通过self属性查找; 用self而非类名, 子类覆盖更灵活.
+        return Account.withdraw(self, amount + self.withdraw_fee)
+
+
+# =============================================================================
+# 七, 类中名称查找规则
+# =============================================================================
+# 点表达式的查找顺序:
+#   1. 如果实例中有该名称的属性 -> 返回属性值
+#   2. 否则 -> 去父类中查找, 一直向上追溯
+
+class SavingsAccount(Account):
+    deposit_fee = 2
+
+    def deposit(self, amount):
+        return Account.deposit(self, amount - self.deposit_fee)
+
+
+# =============================================================================
+# 八, 多重继承(Multiple Inheritance)
+# =============================================================================
+# 一个子类可以有多个父类: class <name>(<base1>, <base2>)
+# 属性查找按照 MRO(Method Resolution Order)从左到右, 找到即停.
+
+class AsSeenOnTVAccount(CheckingAccount, SavingsAccount):
+    def __init__(self, account_holder):
+        self.holder = account_holder
+        self.balance = 1       # 开户送 1 元
+
+
+# =============================================================================
+# 九, 组合(Composition)
+# =============================================================================
+# 一个对象把另一个对象作为属性, 叫做组合.
+# 与继承的区别: 继承是"is-a", 组合是"has-a".
+
+class Bank:
+
+    def __init__(self):
+        self.accounts = []
+
+    def open_account(self, holder, amount, kind=Account):
+        account = kind(holder)       # 开户: 用 kind 类创建实例
+        account.deposit(amount)
+        self.accounts.append(account)
+        return account
+
+    def pay_interest(self):
+        for a in self.accounts:
+            a.deposit(a.balance * a.interest)
+
+    def too_big_to_fail(self):
+        return len(self.accounts) > 1

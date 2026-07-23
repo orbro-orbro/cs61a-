@@ -9,10 +9,14 @@ cs61a/
 ├── hw01/          # 作业：函数、控制流
 ├── hw02/          # 作业：高阶函数、accumulate 抽象
 ├── hw03/          # 作业：递归
+├── hw04/          # 作业：数据抽象与树
+├── hw05/          # 作业：面向对象编程
 ├── lab03/         # Lab：列表操作与递归
 ├── lab04/         # Lab：高阶函数与数据抽象（树）
+├── lab06/         # Lab：面向对象编程 (OOP)
 ├── hog/           # Project 1: The Game of Hog（骰子游戏）
 ├── cats/          # Project 2: Cats（打字测试与自动纠错）
+├── ants/          # Project 3: Ants Vs. SomeBees（塔防游戏）
 ├── note/          # 学习笔记
 └── README.md
 ```
@@ -24,6 +28,7 @@ cs61a/
 | `hw01/` | `hw01.py` | `a_plus_abs_b`（不用 `abs` 实现 a+\|b\|）、`two_of_three`（三数取两小，求平方和）、`largest_factor`（找最大真因数）、`hailstone`（冰雹序列 / Collatz 猜想） |
 | `hw02/` | `hw02.py` | `product`（连乘）、`accumulate`（通用 fuse 抽象——加和乘只是它的特例）、`summation_using_accumulate` / `product_using_accumulate`（用 accumulate 一行实现求和/求积）、`make_repeater`（返回复合 n 次 f 的函数，闭包初体验） |
 | `hw03/` | `hw02.py` | `num_eights`（数位上 8 的个数）、`digit_distance`（相邻数位差的绝对值之和）、`interleaved_sum`（奇偶位交替求和，从 1 递推 n）、`next_smaller_dollar` / `next_larger_dollar`（找各位递减/递增的美元金额）、`count_dollars`（递归计数到目标金额）、`shuffle`（交错合并列表两半）、`deep_map`（递归映射嵌套列表） |
+| `hw05/` | `hw04.py` | `VendingMachine`（自动售货机，练习类与实例属性、方法交互）、`cumulative_mul`（树递归：节点 = 自身 x 子节点乘积）、`prune_small`（裁剪掉 label 最大的分支，保留 n 个最小）、`Pet` / `Cat`（继承：`talk` / `lose_life` / `eat` 方法覆盖） |
 
 ## Lab
 
@@ -31,6 +36,7 @@ cs61a/
 |------|------|----------|
 | `lab03/` | `lab03.py` | `flatten`（展平嵌套列表）、`close_list`（找最近的 k 个相邻元素）、`remove_first`（按值删除首个匹配项）、`sort`（选择排序）、`make_onion`（函数洋葱：`f(g(x))` → `g(f(x))`）、`make_func_repeater`（把函数重复应用 n 次）、`ten_pairs`（统计和为 10 的数位对）、`count_digit`（统计数字 n 中某数位的出现次数） |
 | `lab04/` | `lab04.py` | 自实现 `my_map` / `my_filter` / `my_reduce`，城市数据抽象（`make_city` / `get_name` / `get_lat` / `get_lon` → `distance` / `closer_city`），树抽象（`sum_tree` 递归求和、`balanced` 判断分支数是否递减、`num_trees` 枚举所有树形、`only_paths` 从标签构造路径树） |
+| `lab06/` | `lab06.py` | `Transaction` / `BankAccount`（交易记录与 OOP 状态管理）、`Email` / `Server` / `Client`（多对象组合：客户端-服务器邮件系统）、`Mint` / `Coin` / `Nickel` / `Dime`（类属性继承、年代加成计算）、`VirFib`（Virahanka Fibonacci——非破坏性链表式迭代器，每次 `next()` 返回新实例） |
 
 每一题都有 doctest，写完直接跑验证，很有 TDD 的感觉。
 
@@ -46,6 +52,8 @@ cs61a/
 | `note/Sequence and Containers.py` | 序列与容器：List/Range/String/Dict 全覆盖，切片、列表推导式、序列聚合（sum/max/min）、解包与成员检测 |
 | `note/Mutability and Data Abstraction.py` | 数据抽象：构造器与选择器的分离思想，以有理数（rational）为例用闭包实现 ADT |
 | `note/Tree.py` | 树 ADT（嵌套列表表示）：`fib_tree` 斐波那契树、`print_sums` 路径和、`count_leaves` / `count_paths` 等递归操作 |
+| `note/object.py` | 面向对象编程：类与实例、属性查找优先级（实例 → 类 → 父类）、继承与 `super()`、多重继承与 MRO、组合 vs 继承（"is-a" vs "has-a"） |
+| `note/string representations.py` | 字符串表示：f-string 格式化、`__str__` vs `__repr__` 的设计哲学（给人看 vs 给 Python 看）、`eval`/`repr` 关系、容器内部永远用 `repr`、常见 dunder 方法一览与鸭子类型 |
 
 ## Project: The Game of Hog 🐗
 
@@ -101,6 +109,60 @@ python cats.py -t              # 无主题，随机段落
 python cats.py -t dog          # 只练习包含 dog 的段落
 python cats_gui.py             # 图形界面（多人模式）
 python ok                      # 课程自带测试
+如果无法执行，可以考虑将python换成py，或者python3
+```
+
+## Project: Ants Vs. SomeBees 🐜
+
+Ants 是一个塔防游戏——玩家在殖民地（Colony）部署各种蚂蚁，阻止蜜蜂（Bee）从 Hive 一路入侵到 Ant Home Base。不同蚂蚁有不同的攻击距离、伤害方式和特殊能力，玩家需要根据战场形势搭配兵种。
+
+### 兵种体系（共 14 种蚂蚁）
+
+| 蚂蚁 | 费用 | 生命 | 能力 |
+|------|------|------|------|
+| `HarvesterAnt` | 2 | 1 | 每回合产 1 食物（经济来源） |
+| `ThrowerAnt` | 4 | 1 | 基础远程攻击，打 1 点伤害 |
+| `ShortThrower` | 3 | 1 | 限射程 ≤ 3 格的远程 |
+| `LongThrower` | 3 | 1 | 限射程 ≥ 5 格的远程 |
+| `FireAnt` | 4 | 3 | 受伤时反弹伤害给同地点所有蜂，死亡时再爆一次 |
+| `WallAnt` | 4 | 4 | 纯肉盾，无攻击 |
+| `HungryAnt` | 4 | 1 | 随机吃掉同地点一只蜂，咀嚼冷却 3 回合 |
+| `ProtectorAnt` | 4 | 2 | 容器蚂蚁，保护被容纳的蚂蚁 |
+| `TankAnt` | 6 | 2 | 容器 + 攻击：让被容纳的蚂蚁行动，同时自己攻击同地点蜂 |
+| `ScubaThrower` | 5 | 1 | 防水 Thrower，能下水 |
+| `QueenAnt` | 6 | 1 | 唯一；像 Thrower 攻击 + 身后所有蚂蚁伤害翻倍；女王死则游戏失败 |
+| `NinjaAnt` (EC) | 6 | 1 | 攻击同地点所有蜂，但不阻挡路径（蜂直接穿过） |
+| `LaserAnt` (EC) | 10 | 1 | 激光穿透攻击前方所有昆虫，距离越近伤害越高 |
+| `SlowThrower` (EC) | 6 | 1 | 命中后减速目标蜂 3 回合 |
+| `ScaryThrower` (EC) | 6 | 1 | 命中后让目标蜂恐惧后退 |
+
+### 游戏机制
+
+- **地图**：由 `Place` 串联的单向 tunnel。蜂从 Hive 沿 `exit` 前进，蚂蚁沿 `entrance` 搜索。
+- **水地形**：非防水昆虫进入 `Water` 直接死亡。蜂会飞（防水），`ScubaThrower` 防水。
+- **容器系统**：`ContainerAnt` 可以容纳另一只蚂蚁——ProtectorAnt 专注保护，TankAnt 兼顾攻击。
+- **女王机制**：`QueenAnt` 只能造一只；她死亡时游戏立即失败；她给身后所有蚂蚁永久伤害翻倍。
+- **食物经济**：放置蚂蚁消耗 `food`，`HarvesterAnt` 每回合产出食物。
+
+### 项目亮点
+
+**继承层次设计精妙**。`Insect` → `Ant` / `Bee`，`Ant` → `HarvesterAnt` / `ThrowerAnt` / `FireAnt` / `ContainerAnt` / `QueenAnt` 等。`ThrowerAnt` 又派生出 `ShortThrower` / `LongThrower` / `ScubaThrower` / `SlowThrower` / `ScaryThrower`——通过覆盖 `lower_bound` / `upper_bound` 控制射程，覆盖 `throw_at` 改变命中效果。继承链即设计链，读代码就是读设计。
+
+**容器蚂蚁的双蚂蚁共存**。`ContainerAnt.store_ant` 和修改后的 `Ant.add_to` 允许两只蚂蚁共享一个 `Place`。`place.ant` 指向容器蚁，容器蚁的 `ant_contained` 存被保护蚁。`TankAnt.action` 先委托被容纳蚂蚁行动，再自己攻击——策略模式 + 组合的绝佳示例。
+
+**状态效果系统**。`SlowThrower` 的减速（偶数回合行动，奇数回合跳过）和 `ScaryThrower` 的恐惧（反向移动）直接在 `Bee.action` 中通过 `scared` 和 `slow` 状态控制，不需要额外的事件系统——简单优雅。
+
+**地图遍历的两种方向**。`exit`（蜂前进方向）和 `entrance`（蚂蚁搜索方向）构成双向链表，`ThrowerAnt.nearest_bee` 沿 `entrance` 找蜂，`QueenAnt` 沿 `exit` 给后方蚂蚁加 buff——同一数据结构支撑两种遍历方向。
+
+### 运行方式
+
+```bash
+cd ants
+python gui.py                   # 图形界面（塔防游戏）
+python gui.py --water           # 水域地图
+python gui.py --food 10         # 指定初始食物
+python ok -q <题号>             # 测试指定题目
+python ok -q <题号> -u          # 解锁题目
 如果无法执行，可以考虑将python换成py，或者python3
 ```
 
